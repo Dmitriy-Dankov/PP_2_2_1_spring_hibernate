@@ -23,7 +23,7 @@ public class Car {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
     public Car() {
@@ -68,7 +68,12 @@ public class Car {
         if (user == null) {
             throw new NullPointerException("Can't add null user");
         }
+
         this.user = user;
+
+        if (this.user.getCar() == null) {
+            this.user.setCar(this);
+        }
     }
 
     @Override
